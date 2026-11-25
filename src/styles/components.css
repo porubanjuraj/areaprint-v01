@@ -1,0 +1,562 @@
+/* Komponenty v01. Rozmery v rem (16px = 1rem pri 1280). Hodnoty len z tokenov;
+ * výnimky (mimo tokenov vo Figme) sú označené „mimo tokenov“ a sú v otvorených otázkach. */
+
+/* ===================== Button (76:334) ===================== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-full); white-space: nowrap;
+  padding: var(--spacing-component-md) var(--spacing-component-lg);
+  transition: background-color var(--dur-hover) ease, border-color var(--dur-hover) ease, color var(--dur-hover) ease;
+}
+.btn--l { padding: var(--spacing-component-md) var(--spacing-content-xs); }
+.btn--accent { background: var(--color-bg-accent); color: var(--color-text-primary); }
+.btn--outline { border: 1px solid var(--color-border-default); color: var(--color-text-primary); }
+.btn--outline-dark { border: 1px solid var(--color-border-on-dark); color: var(--color-text-on-dark); }
+/* Hover: farby sa invertujú voči podkladu (na svetlom tmavé tlačidlo, na tmavom svetlé) */
+.btn--accent:hover, .btn--outline:hover { background: var(--color-bg-dark); border-color: var(--color-bg-dark); color: var(--color-text-on-dark); }
+.on-dark .btn--accent:hover, .btn--outline-dark:hover { background: var(--color-bg-page); border-color: var(--color-bg-page); color: var(--color-text-primary); }
+/* Hover: text odíde hore a zdola príde znova */
+/* okno o 0,2em vyššie ako riadok (aby sa neorezali diakritika a dĺžne), kópie sú od seba 0,4em */
+.btn__label { display: block; overflow: hidden; padding-block: 0.2em; margin-block: -0.2em; }
+.btn__roll { position: relative; display: block; transition: transform 450ms var(--ease-out); }
+.btn__roll > span { display: block; }
+.btn__roll > span + span { position: absolute; left: 0; right: 0; top: calc(100% + 0.4em); }
+.btn:is(:hover, :focus-visible) .btn__roll { transform: translateY(calc(-100% - 0.4em)); }
+@media (prefers-reduced-motion: reduce) { .btn__roll { transition: none; } }
+.btn--full { width: 100%; }
+
+/* ===================== Nav item (76:341) ===================== */
+.nav-item {
+  display: inline-flex; align-items: center; justify-content: center; white-space: nowrap;
+  padding: var(--spacing-component-sm) var(--spacing-component-lg);
+  border-radius: var(--radius-full);
+  transition: background-color var(--dur-hover) ease;
+}
+.nav-item:hover, .nav-item.is-active { background: var(--color-bg-page); }
+
+/* ===================== Icon button (76:344) ===================== */
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 3.5rem; height: 3.5rem; border-radius: var(--radius-full);
+  background: var(--color-bg-page); color: var(--color-text-primary);
+  font-size: 1.25rem; line-height: 1.4; /* 20 px: v komponente bez textového štýlu (mimo tokenov) */
+}
+/* Hover karty: šípka odíde do pravého horného rohu a nová príde z ľavého dolného */
+.icon-btn {
+  position: relative; overflow: hidden; isolation: isolate;
+  clip-path: circle(50%); /* orezanie aj počas animácie (Chrome inak niekedy ignoruje zaoblenie) */
+  transition: background-color 300ms ease, color 300ms ease;
+}
+/* obe šípky majú veľkosť celého kruhu, takže posun o 100 % ich dostane úplne mimo */
+.icon-btn__arrow, .icon-btn::after { position: absolute; inset: 0; display: grid; place-items: center; transition: transform 500ms var(--ease-out); }
+.icon-btn::after { content: "↗"; transform: translate(-100%, 100%); }
+:is(.solution-tile, .real-card, .article-tile):is(:hover, :focus-within) .icon-btn__arrow { transform: translate(100%, -100%); }
+:is(.solution-tile, .real-card, .article-tile):is(:hover, :focus-within) .icon-btn::after { transform: none; }
+@media (prefers-reduced-motion: reduce) { .icon-btn__arrow, .icon-btn::after { transition: none; } }
+
+/* ===================== Chip (76:351) ===================== */
+.chip {
+  display: inline-flex; white-space: nowrap;
+  padding: var(--spacing-component-xs) var(--spacing-component-md);
+  border-radius: var(--radius-full); color: var(--color-text-primary);
+}
+.chip--pastel { background: var(--color-bg-pastel-subtle); }
+.chip--light { background: var(--color-bg-page); }
+
+/* ===================== Icon pill (76:358) ===================== */
+.icon-pill {
+  display: inline-flex; align-items: center; justify-content: center; flex: none; align-self: flex-start;
+  padding: var(--spacing-component-lg); border-radius: var(--radius-full);
+}
+.icon-pill .icon { width: 2rem; height: 2rem; }
+.icon-pill--light { background: var(--color-bg-page); color: var(--color-text-primary); }
+.icon-pill--dark { width: 4.5rem; height: 4.5rem; background: var(--color-bg-dark-subtle); color: var(--color-text-on-dark); }
+
+/* ===================== Tech link (76:367) ===================== */
+.tech-link {
+  display: inline-flex; align-items: center; gap: var(--spacing-component-lg); white-space: nowrap;
+  padding: var(--spacing-content-xs) var(--spacing-content-sm);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-page); color: var(--color-text-primary);
+  transition: background-color var(--dur-hover) ease, color var(--dur-hover) ease;
+}
+.tech-link__label { font-size: var(--type-heading-l-size); line-height: var(--type-heading-l-lh); letter-spacing: var(--type-heading-ls); }
+.tech-link__arrow { font-size: var(--type-heading-s-size); line-height: var(--type-heading-s-lh); letter-spacing: var(--type-heading-ls); transition: transform var(--dur-hover) var(--ease-out); }
+.tech-link:hover, .tech-link:focus-visible { background: var(--color-bg-dark); color: var(--color-text-on-dark); }
+.tech-link:hover .tech-link__arrow { transform: translate(2px, -2px); }
+
+/* ===================== Slider dots (81:938) ===================== */
+.dots { display: none; align-items: center; justify-content: center; gap: var(--spacing-component-sm); height: 0.625rem; }
+.dots__dot {
+  width: 0.5rem; height: 0.5rem; border-radius: var(--radius-full);
+  background: var(--color-text-primary); opacity: 0.25;
+  transition: opacity var(--dur-hover) ease, width var(--dur-hover) ease, height var(--dur-hover) ease;
+}
+.dots__dot.is-active { width: 0.625rem; height: 0.625rem; opacity: 1; }
+
+/* ===================== Client logo (77:503) ===================== */
+.client-logo {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 7.5625rem; height: 4rem; padding: var(--spacing-component-sm);
+  border-radius: var(--radius-sm); background: var(--color-bg-page);
+}
+.client-logo img { width: 6rem; height: 3rem; object-fit: contain; opacity: 0.75; }
+
+/* ===================== Photo ===================== */
+.photo { display: block; overflow: hidden; border-radius: var(--radius-md); }
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ===================== Stretched link (celá karta je klikateľná) ===================== */
+.stretched::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.stretched:focus-visible { outline: none; box-shadow: none; }
+:is(.solution-tile, .real-card, .article-tile):has(.stretched:focus-visible) {
+  outline: 2px solid var(--color-border-strong); outline-offset: 2px;
+}
+
+/* ===================== Marquee (pilulky a logá) ===================== */
+.marquee { position: relative; width: 100%; }
+.marquee__track { display: flex; width: max-content; will-change: transform; }
+.marquee__track > li { display: flex; flex: none; }
+
+/* ===================== Navigation (77:548) ===================== */
+.navigation {
+  display: flex; align-items: center;
+  padding: var(--spacing-component-md) var(--spacing-component-md) var(--spacing-component-md) var(--spacing-content-xs);
+  border-radius: var(--radius-full); background: var(--color-bg-subtle);
+}
+.navigation__logo { display: block; flex: 1 1 0; min-width: 0; }
+.navigation__logo .icon { width: 10.25rem; height: 2rem; max-width: none; }
+.navigation__items { display: flex; align-items: center; gap: var(--spacing-component-xs); }
+.navigation__end { display: flex; flex: 1 1 0; justify-content: flex-end; }
+.menu-btn {
+  display: none; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  width: 2.5rem; height: 2.5rem; border-radius: var(--radius-full); background: var(--color-bg-page);
+}
+.menu-btn span { display: block; width: 1rem; height: 1.5px; border-radius: 1px; background: var(--color-text-primary); transition: transform var(--dur-hover) var(--ease-out); }
+.menu-btn.is-open span:first-child { transform: translateY(3.25px) rotate(45deg); }
+.menu-btn.is-open span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+
+/* Mobilné menu (NÁVRH, nie je vo Figme) */
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 50; overflow-y: auto;
+  display: flex; flex-direction: column; gap: var(--spacing-content-md);
+  padding: var(--page-pad, var(--spacing-content-xs));
+  background: var(--color-bg-page);
+}
+.mobile-menu[hidden] { display: none; }
+.mobile-menu__bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--spacing-component-md) var(--spacing-component-md) var(--spacing-component-md) var(--spacing-component-lg);
+  border-radius: var(--radius-full); background: var(--color-bg-subtle);
+}
+.mobile-menu__bar .menu-btn { display: flex; }
+.mobile-menu__list { display: flex; flex-direction: column; gap: var(--spacing-component-sm); padding-inline: var(--spacing-component-lg); }
+.mobile-menu__link { display: block; padding-block: var(--spacing-component-sm); }
+.mobile-menu__link:hover { color: var(--color-text-muted); }
+.mobile-menu.is-open { animation: menu-in 300ms var(--ease-out); }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-0.5rem); } }
+@media (prefers-reduced-motion: reduce) { .mobile-menu.is-open { animation: none; } }
+
+/* ===================== Section header (81:872) ===================== */
+.section-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: var(--spacing-section-xs) var(--spacing-component-lg) var(--spacing-component-lg);
+}
+.section-header__title { font-size: var(--type-display-l-size); line-height: var(--type-display-lh); letter-spacing: var(--type-display-ls); white-space: nowrap; }
+
+/* ===================== Hero (58:4467 + 58:4137) ===================== */
+.page__main { display: flex; flex-direction: column; gap: var(--spacing-component-lg); }
+.hero {
+  display: grid;
+  grid-template-columns: 384fr 432fr 384fr;
+  grid-template-rows: 14.3125rem 14.3125rem 12.5rem;
+  grid-template-areas: "hero hero thirty" "hero hero pastel" "proc logos logos";
+  gap: var(--spacing-component-lg);
+}
+.hero__slider { display: contents; }
+.hero-tile { grid-area: hero; }
+.tile--thirty { grid-area: thirty; }
+.tile--pastel { grid-area: pastel; }
+.tile--process { grid-area: proc; }
+.logos { grid-area: logos; }
+
+.raster-tile { position: relative; isolation: isolate; overflow: hidden; }
+.raster-tile__canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; border-radius: inherit; }
+
+.hero-tile {
+  display: flex; flex-direction: column;
+  padding: var(--spacing-content-md);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-on-dark);
+}
+.hero-tile__inner { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.hero-tile__bottom { display: flex; flex-direction: column; gap: var(--spacing-content-sm); }
+.hero-tile__lead { width: 25.8125rem; color: var(--color-text-on-dark-muted); }
+.hero-tile__actions { display: flex; gap: var(--spacing-component-sm); align-items: flex-start; }
+
+.tile {
+  display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;
+  padding: var(--spacing-content-sm); border-radius: var(--radius-lg);
+}
+.tile--thirty { background-color: var(--color-bg-accent); color: var(--color-text-primary); }
+.tile--thirty > p { position: relative; z-index: 1; }
+.tile--pastel { background: var(--color-bg-pastel); }
+.tile--subtle { background: var(--color-bg-subtle); }
+.tile__head { display: flex; flex-direction: column; gap: var(--spacing-component-lg); }
+.chips .marquee__track { gap: var(--spacing-component-xs); }
+
+.logos {
+  display: flex; flex-direction: column; justify-content: center; gap: var(--spacing-component-sm);
+  padding: var(--spacing-content-sm); border-radius: var(--radius-lg);
+  background: var(--color-bg-subtle); overflow: hidden;
+}
+.logos__row .marquee__track { gap: var(--spacing-component-sm); }
+
+/* ===================== Solutions (58:4194, 58:4217) ===================== */
+.solutions { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--spacing-component-lg); }
+.solution-tile {
+  position: relative; grid-column: span 2;
+  display: flex; flex-direction: column; gap: var(--spacing-content-xs);
+  padding: var(--spacing-component-lg); border-radius: var(--radius-lg);
+  background: var(--color-bg-subtle); overflow: hidden;
+}
+.solution-tile { transition: background-color 300ms ease, color 300ms ease; }
+.solution-tile .muted, .solution-tile .icon-pill { transition: background-color 300ms ease, color 300ms ease; }
+/* Hover (návrh dizajnéra): dlaždica stmavne, šípka je oranžová */
+.solution-tile:is(:hover, :focus-within) { background: var(--color-bg-dark); color: var(--color-text-on-dark); }
+.solution-tile:is(:hover, :focus-within) .muted { color: var(--color-text-on-dark-muted); }
+.solution-tile:is(:hover, :focus-within) .icon-pill { background: var(--color-bg-dark-subtle); color: var(--color-text-on-dark); }
+.solution-tile:is(:hover, :focus-within) .icon-btn { background: var(--color-bg-accent); color: var(--color-text-primary); }
+/* Realizácie a Magazín: rovnaký farebný hover ako Riešenia. Pri veľkej karte s fotkou stmavne panel s textom. */
+:is(.real-card--small, .article-tile, .real-card__panel), :is(.real-card, .article-tile) :is(.muted, .chip) { transition: background-color 300ms ease, color 300ms ease; }
+:is(.real-card--small, .article-tile):is(:hover, :focus-within),
+.real-card--large:is(:hover, :focus-within) .real-card__panel { background: var(--color-bg-dark); color: var(--color-text-on-dark); }
+:is(.real-card, .article-tile):is(:hover, :focus-within) .muted { color: var(--color-text-on-dark-muted); }
+.real-card--small:is(:hover, :focus-within) .chip { background: var(--color-bg-dark-subtle); color: var(--color-text-on-dark); }
+:is(.real-card, .article-tile):is(:hover, :focus-within) .icon-btn { background: var(--color-bg-accent); color: var(--color-text-primary); }
+.solution-tile__media { position: relative; height: 15rem; }
+.solution-tile__photo { position: absolute; inset: 0; }
+.solution-tile__btn { position: absolute; top: var(--spacing-component-lg); right: var(--spacing-component-lg); }
+.solution-tile__body { display: flex; flex-direction: column; gap: var(--spacing-content-xs); padding: 0 var(--spacing-component-lg) var(--spacing-component-lg); }
+.solution-tile__text { display: flex; flex-direction: column; gap: var(--spacing-component-md); }
+.solution-tile__title { font-size: var(--type-heading-m-size); line-height: var(--type-heading-m-lh); letter-spacing: var(--type-heading-ls); }
+
+@media (min-width: 1024px) {
+  .solution-tile--large {
+    grid-column: span 3; height: 25rem;
+    display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "body media";
+    gap: var(--spacing-content-sm); padding: var(--spacing-content-sm);
+  }
+  .solution-tile--large .solution-tile__media { grid-area: media; height: auto; }
+  .solution-tile--large .solution-tile__body { grid-area: body; justify-content: space-between; padding: 0; gap: 0; }
+  .solution-tile--large .solution-tile__text { gap: var(--spacing-component-lg); }
+  .solution-tile--large .solution-tile__title { font-size: var(--type-heading-xl-size); line-height: var(--type-heading-xl-lh); }
+}
+
+/* ===================== Step tile (77:550) ===================== */
+.steps { position: relative; display: flex; gap: var(--spacing-component-lg); }
+.step-tile {
+  position: relative;
+  flex: 1 1 0; min-width: 0; height: 17.5rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: var(--spacing-content-sm); border-radius: var(--radius-lg);
+  background: var(--color-bg-subtle);
+}
+.step-tile--highlight { background: var(--color-bg-pastel); }
+.step-tile__num { font-size: var(--type-display-l-size); line-height: var(--type-display-lh); letter-spacing: var(--type-display-ls); }
+.step-tile__label { font-size: var(--type-heading-xs-size); line-height: var(--type-heading-xs-lh); letter-spacing: var(--type-heading-ls); }
+
+/* ===================== CTA banner (81:886) ===================== */
+.cta-banner {
+  display: flex; align-items: center; gap: var(--spacing-content-md);
+  padding: var(--spacing-content-sm); border-radius: var(--radius-lg);
+  background: var(--color-bg-dark); color: var(--color-text-on-dark);
+}
+.cta-banner__text { flex: 1; }
+.cta-banner .icon-pill { align-self: center; }
+
+/* ===================== Realization card (77:551) ===================== */
+.realizations { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-component-lg); }
+.realizations__side { display: flex; flex-direction: column; gap: var(--spacing-component-lg); }
+.real-card { position: relative; border-radius: var(--radius-lg); overflow: hidden; isolation: isolate; }
+.real-card--large {
+  height: 37.5rem; display: flex; flex-direction: column; justify-content: space-between;
+  padding: var(--spacing-component-lg);
+}
+.real-card__bg { position: absolute; inset: 0; z-index: -1; border-radius: var(--radius-lg); }
+.real-card__top { display: flex; align-items: flex-start; justify-content: space-between; }
+.real-card__panel {
+  display: flex; flex-direction: column; gap: var(--spacing-component-lg);
+  padding: var(--spacing-content-xs); border-radius: var(--radius-md); background: var(--color-bg-page);
+}
+.real-card--small {
+  flex: 1 1 0; display: flex; flex-direction: row-reverse; gap: var(--spacing-content-xs);
+  padding: var(--spacing-component-lg); background: var(--color-bg-subtle);
+}
+.real-card__media { position: relative; flex: none; width: 17.5rem; }
+.real-card__photo { position: absolute; left: 0; top: 0; width: 100%; height: 16.25rem; }
+.real-card__btn { position: absolute; top: var(--spacing-component-md); right: var(--spacing-component-md); }
+.real-card__body {
+  flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start;
+  padding: var(--spacing-component-sm) var(--spacing-component-sm) var(--spacing-component-sm) 0;
+}
+.real-card__text { display: flex; flex-direction: column; gap: var(--spacing-component-lg); }
+
+/* ===================== Technológie (58:4313) ===================== */
+.tech {
+  display: flex; flex-direction: column; gap: var(--spacing-content-lg);
+  padding: var(--spacing-content-md); border-radius: var(--radius-lg);
+  background: var(--color-bg-pastel); overflow: hidden; scroll-margin-top: var(--spacing-component-lg);
+}
+/* Pripnutie sekcie Technológie (desktop, bez reduced motion): sekcia stojí v strede obrazovky,
+ * kým pilulky neprejdú od prvej po poslednú. Výšku obalu nastavuje JS (marquee.ts). */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .tech { position: sticky; top: max(var(--spacing-content-xs), calc(50vh - 11.4rem)); }
+}
+.tech__head { display: flex; align-items: flex-end; gap: var(--spacing-content-lg); }
+.tech__title { width: 45rem; flex: none; }
+.tech__text { flex: 1; min-width: 0; }
+.tech__links .marquee__track { gap: var(--spacing-component-md); }
+
+/* ===================== Article tile (77:500) ===================== */
+.magazine { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-component-lg); }
+.article-tile {
+  position: relative; display: flex; gap: var(--spacing-content-xs);
+  padding: var(--spacing-component-lg); border-radius: var(--radius-lg);
+  background: var(--color-bg-subtle); overflow: hidden;
+}
+.article-tile__text { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; padding-block: var(--spacing-component-sm); }
+.article-tile__photo { flex: none; width: 8.5rem; height: 11.25rem; }
+
+/* ===================== Footer (81:937) =====================
+ * Päta vo Figme obsahuje hodnoty mimo tokenov (skupina zmenšená na 89,3 %).
+ * Pre zhodu s dizajnom sú tu ako lokálne premenné; sú v otvorených otázkach. */
+.footer {
+  --f-gap-head: 2.0094rem;    /* 32.151 */
+  --f-gap-form: 1.4233rem;    /* 22.773 */
+  --f-gap-col: 2.2327rem;     /* 35.723 */
+  --f-gap-links: 1.1164rem;   /* 17.862 */
+  --f-input-h: 3.5723rem;     /* 57.157 */
+  --f-input-pl: 1.5631rem;    /* 25.01 */
+  --f-btn-h: 2.6793rem;       /* 42.868 */
+  --f-btn-px: 1.1164rem;      /* 17.862 */
+  --f-btn-right: 0.3856rem;   /* 6.17 */
+  --f-btn-size: 1.0047rem;    /* 16.075 */
+  --f-border: 0.893px;
+  --f-box: 1.7861rem;         /* 28.578 */
+  --f-box-r: 0.3349rem;       /* 5.358 */
+  --f-consent-gap: 1.0605rem; /* 16.968 */
+  --f-consent-size: 0.7256rem;/* 11.61 */
+  border-radius: var(--radius-lg); background: var(--color-bg-dark); color: var(--color-text-on-dark);
+  overflow: hidden; scroll-margin-top: var(--spacing-component-lg);
+}
+.footer a { transition: opacity var(--dur-hover) ease; }
+.footer a:hover { opacity: 0.75; }
+.footer__news { display: flex; align-items: flex-end; gap: var(--spacing-section-sm); padding: var(--spacing-content-md); }
+.footer__news-head { flex: none; width: 38rem; display: flex; flex-direction: column; gap: var(--f-gap-head); }
+.newsletter { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--f-gap-form); }
+.newsletter__row { position: relative; }
+.newsletter__input {
+  display: block; width: 100%; height: var(--f-input-h);
+  padding: 0 calc(var(--f-btn-px) * 2 + 6rem) 0 var(--f-input-pl);
+  border: var(--f-border) solid var(--color-border-on-dark); border-radius: var(--radius-full);
+  background: var(--color-bg-dark-subtle); color: var(--color-text-on-dark);
+  font-size: var(--type-label-m-size); line-height: var(--type-label-lh);
+  transition: border-color var(--dur-hover) ease, box-shadow var(--dur-hover) ease;
+}
+.newsletter__input::placeholder { color: var(--color-text-on-dark); opacity: 1; }
+.newsletter__input:focus { outline: none; border-color: var(--color-text-on-dark-muted); box-shadow: 0 0 0 2px var(--color-border-on-dark); }
+.newsletter__input:focus::placeholder { color: var(--color-text-on-dark-muted); }
+.newsletter__submit {
+  position: absolute; right: var(--f-btn-right); top: 50%; transform: translateY(-50%);
+  height: var(--f-btn-h); padding: 0 var(--f-btn-px); border-radius: var(--radius-full);
+  background: var(--color-bg-accent); color: var(--color-text-primary);
+  font-size: var(--f-btn-size); line-height: 1; font-feature-settings: "ss02", "ss03", "ss04", "ss05";
+  transition: background-color var(--dur-hover) ease;
+}
+.newsletter__submit:hover { background: var(--color-bg-accent-hover); }
+.newsletter__consent { position: relative; display: flex; align-items: center; gap: var(--f-consent-gap); cursor: pointer; }
+.newsletter__consent input { position: absolute; opacity: 0; width: var(--f-box); height: var(--f-box); margin: 0; cursor: pointer; }
+.newsletter__box {
+  flex: none; width: var(--f-box); height: var(--f-box); border-radius: var(--f-box-r);
+  border: var(--f-border) solid var(--color-border-on-dark); background: var(--color-bg-dark-subtle);
+  display: grid; place-items: center;
+}
+.newsletter__consent input:checked + .newsletter__box::after {
+  content: ""; width: 40%; height: 22%; margin-top: -10%;
+  border-left: 2px solid var(--color-text-on-dark); border-bottom: 2px solid var(--color-text-on-dark); transform: rotate(-45deg);
+}
+.newsletter__consent input:focus-visible + .newsletter__box { outline: 2px solid var(--color-text-on-dark); outline-offset: 2px; }
+.newsletter__consent-text { font-size: var(--f-consent-size); line-height: 1; font-feature-settings: "ss02", "ss03", "ss04", "ss05"; }
+.newsletter__msg:empty { display: none; }
+.newsletter__msg { font-size: var(--type-body-s-size); line-height: var(--type-body-lh); color: var(--color-text-on-dark); }
+.newsletter.is-sent .newsletter__input { border-color: var(--color-border-on-dark); color: var(--color-text-on-dark-muted); }
+.newsletter.is-invalid .newsletter__input:invalid, .newsletter.is-invalid input[type="checkbox"]:invalid + .newsletter__box { border-color: var(--color-text-on-dark); }
+
+.footer__bottom { display: flex; align-items: center; gap: var(--spacing-section-sm); padding: var(--spacing-content-md); }
+.footer__symbol { flex: none; width: 38rem; }
+.footer__symbol .icon { width: 28.3831rem; height: 28.3831rem; }
+.footer__info { flex: 1; align-self: stretch; display: flex; flex-direction: column; justify-content: space-between; }
+.footer__cols { display: flex; justify-content: space-between; align-items: flex-start; white-space: nowrap; }
+.footer__col { display: flex; flex-direction: column; gap: var(--f-gap-col); }
+.footer__col--fixed { width: 11.5rem; }
+.footer__links { display: flex; flex-direction: column; gap: var(--f-gap-links); }
+.footer__contact { display: flex; justify-content: space-between; font-style: normal; font-size: var(--type-label-l-size); line-height: var(--type-label-lh); white-space: nowrap; }
+.footer__fixed { width: 11.5rem; }
+.footer__legal { display: flex; align-items: center; justify-content: space-between; }
+.footer__logo { display: block; color: var(--color-text-on-dark); }
+.footer__logo .icon { width: 10.689rem; height: 2.0867rem; overflow: visible; }
+
+/* =====================================================================
+ * MOBIL a TABLET (< 1024 px): mobilný dizajn 82:870
+ * ===================================================================== */
+@media (max-width: 1023.98px) {
+  .navigation { padding: var(--spacing-component-md) var(--spacing-component-md) var(--spacing-component-md) var(--spacing-component-lg); }
+  .navigation__items, .navigation__cta { display: none; }
+  .menu-btn { display: flex; }
+
+  .section-header {
+    flex-direction: column; align-items: stretch; gap: var(--spacing-content-xs);
+    padding: var(--spacing-content-md) 0 var(--spacing-component-lg);
+  }
+  .section-header__title {
+    white-space: normal; text-align: center;
+    font-size: var(--type-heading-xl-size); line-height: var(--type-heading-xl-lh); letter-spacing: var(--type-heading-ls);
+  }
+  .section-header--m-start .section-header__title { text-align: left; }
+  .section-header__link { width: 100%; }
+
+  /* sliders: swipe + scroll-snap, karty pokračujú za okraj */
+  .slider {
+    display: flex; align-items: flex-start; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-inline: calc(-1 * var(--page-pad)); padding-inline: var(--page-pad); scroll-padding-inline: var(--page-pad);
+  }
+  .slider::-webkit-scrollbar { display: none; }
+  .slider__item { flex: 0 0 100%; scroll-snap-align: start; }
+  .dots { display: flex; }
+
+  .hero { display: flex; flex-direction: column; gap: var(--spacing-component-md); }
+  /* navigácia → hero má na mobile medzeru 12 (Figma 82:871), stránka inak 16 */
+  .page__main { margin-top: calc(var(--spacing-component-md) - var(--spacing-component-lg)); }
+  .hero-tile { height: 25rem; padding: var(--spacing-content-sm); }
+  .hero-tile__bottom { gap: var(--spacing-content-xs); }
+  .hero-tile__lead { width: auto; }
+  .hero-tile__actions { flex-direction: column; align-items: stretch; }
+  .hero__slider { display: flex; gap: var(--spacing-component-md); align-items: stretch; }
+  .tile { height: 12.5rem; padding: var(--spacing-content-xs); }
+  .logos {
+    padding: 0; border-radius: 0; background: none; overflow: visible;
+    margin-inline: calc(-1 * var(--page-pad)); overflow-x: clip;
+  }
+  .logos .client-logo { background: var(--color-bg-subtle); overflow: hidden; }
+  /* vo Figme má logo na mobile obrázok 128×64 (desktop 96×48), presahuje a orezáva sa (82:907) */
+  .logos .client-logo img { width: 8rem; height: 4rem; flex: none; }
+
+  .solutions { gap: var(--spacing-component-sm); }
+  .steps { gap: var(--spacing-component-md); }
+  .step-tile { flex: 0 0 13.75rem; height: 15rem; padding: var(--spacing-content-xs); }
+  .step-tile__num { font-size: var(--type-display-xl-size); }
+
+  .cta-banner { flex-direction: column; align-items: flex-start; gap: 1.25rem; /* 20: mimo tokenov (Figma 82:943) */ }
+  .cta-banner .icon-pill { align-self: flex-start; }
+  .cta-banner__btn { width: 100%; }
+
+  .realizations { grid-template-columns: 1fr; }
+  .real-card--large { height: 26.25rem; }
+  .real-card__panel .real-card__title { font-size: var(--type-heading-xl-size); }
+  .real-card--small { flex: none; flex-direction: column; gap: var(--spacing-component-lg); }
+  .real-card--small .real-card__body { gap: var(--spacing-component-lg); }
+  .real-card__media { width: 100%; height: 13.75rem; }
+  .real-card__photo { height: 100%; }
+
+  .tech { gap: var(--spacing-content-sm); padding: var(--spacing-content-sm); }
+  .tech__head { flex-direction: column; align-items: stretch; gap: var(--spacing-component-lg); }
+  .tech__title { width: auto; }
+  .tech__links .marquee__track, .tech__links.marquee--static .marquee__track { width: auto; flex-direction: column; gap: var(--spacing-component-sm); transform: none !important; }
+  .tech__links .marquee__track > li { display: block; }
+  .tech__links [data-clone] { display: none !important; }
+  .tech-link {
+    display: flex; justify-content: space-between; width: 100%;
+    padding: var(--spacing-component-md) var(--spacing-component-lg);
+  }
+  .tech-link:hover { background: var(--color-bg-dark); color: var(--color-text-on-dark); }
+  .tech-link__label { font-size: var(--type-button-m-size); line-height: var(--type-button-lh); letter-spacing: var(--type-button-ls); font-weight: 500; }
+
+  .magazine { display: flex; gap: var(--spacing-component-sm); }
+
+  /* päta na mobile ide na celú šírku obrazovky a až po spodok (bez boxu), zaoblená len hore */
+  .footer {
+    margin-inline: calc(-1 * var(--page-pad)); margin-bottom: calc(-1 * var(--page-pad));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .footer__news { flex-direction: column; align-items: stretch; gap: var(--spacing-content-sm); padding: var(--spacing-content-sm); }
+  .footer__news-head { width: auto; }
+  .newsletter__row { display: flex; flex-direction: column; gap: var(--spacing-component-md); }
+  .newsletter__input { height: 3.5rem; padding-right: var(--f-input-pl); }
+  .newsletter__submit { position: static; transform: none; height: 2.75rem; width: 100%; }
+  .footer__bottom { flex-direction: column; align-items: stretch; gap: var(--spacing-content-sm); padding: var(--spacing-content-xs); }
+  .footer__symbol { order: 2; width: auto; }
+  .footer__symbol .icon { width: min(100%, 18.25rem); height: auto; aspect-ratio: 1; }
+  .footer__info { gap: 2.5rem; /* 40: mimo tokenov (Figma 90:2368) */ }
+  .footer__col { gap: var(--spacing-content-xs); }
+  .footer__links { gap: var(--spacing-component-md); }
+  .footer__col--fixed { width: auto; }
+  .footer__contact {
+    flex-direction: column; gap: var(--spacing-component-md);
+    font-size: var(--type-heading-m-size); line-height: var(--type-heading-m-lh); letter-spacing: var(--type-heading-ls);
+  }
+  .footer__fixed { width: auto; }
+  .footer__legal { flex-direction: column; align-items: flex-start; gap: var(--spacing-content-xs); }
+  .footer__legal .footer__fixed { width: 11.5rem; }
+  .footer__logo { width: 100%; }
+  .footer__logo .icon { width: 100%; height: auto; aspect-ratio: 171.024 / 33.387; }
+}
+
+/* =====================================================================
+ * TABLET 768–1023 px (NÁVRH, nie je vo Figme): mobilný layout, okraje 40,
+ * karty, ktoré mobil radí pod seba, idú do 2 stĺpcov; slidery ukazujú 2 karty.
+ * ===================================================================== */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .slider__item { flex-basis: calc((100% - var(--spacing-component-md)) / 2); }
+  .solutions .slider__item, .magazine .slider__item { flex-basis: calc((100% - var(--spacing-component-sm)) / 2); }
+  .steps .slider__item { flex-basis: 13.75rem; }
+  .hero-tile__actions { flex-direction: row; }
+  .hero-tile__actions .btn { flex: 1; }
+  .realizations__side { flex-direction: row; }
+  .tech__links .marquee__track { display: grid; grid-template-columns: 1fr 1fr; }
+  .cta-banner__btn { width: auto; }
+}
+
+/* prefers-reduced-motion: pásy stoja a dajú sa posúvať horizontálne */
+.marquee--static {
+  overflow-x: auto; scrollbar-width: none;
+  /* pás ide až po okraj dlaždice ako vo Figme */
+  width: auto; margin-inline: calc(-1 * var(--bleed, 0px)); padding-inline: var(--bleed, 0px);
+}
+.marquee--static::-webkit-scrollbar { display: none; }
+.marquee--static .marquee__track { width: max-content; }
+.tile--pastel .chips { --bleed: var(--spacing-content-sm); }
+.tech__links { --bleed: var(--spacing-content-md); }
+.logos .marquee { --bleed: var(--spacing-content-sm); }
+@media (max-width: 1023.98px) {
+  .tile--pastel .chips { --bleed: var(--spacing-content-xs); }
+  .tech__links { --bleed: 0px; }
+  .logos .marquee { --bleed: 0px; }
+}
+/* bez WebGL2: statický PNG export rastra (vygenerovaný z rovnakého shadera) */
+/* statický raster ako pozadie, kým sa nenačíta WebGL (a natrvalo, ak WebGL2 nie je); canvas sa ukáže po prvom vykreslení */
+.hero-tile.raster-tile { background: var(--color-bg-dark) url("/img/raster-hero.png") 0 0 / 100% 100% no-repeat; }
+.tile--thirty.raster-tile { background: var(--color-bg-accent) url("/img/raster-thirty.png") 0 0 / 100% 100% no-repeat; }
+@media (max-width: 1023.98px) {
+  .hero-tile.raster-tile { background-image: url("/img/raster-hero-m.png"); background-size: cover; background-position: 100% 50%; }
+  .tile--thirty.raster-tile { background-image: url("/img/raster-thirty-m.png"); background-size: cover; background-position: 100% 0; }
+}
+.raster-tile__canvas { opacity: 0; }
+.raster-tile.is-live .raster-tile__canvas { opacity: 1; }
+.raster-fallback .raster-tile__canvas { display: none; }
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .footer__logo { width: 18.375rem; }
+  .footer__symbol .icon { width: 18.25rem; }
+}
