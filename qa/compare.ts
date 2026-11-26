@@ -8,7 +8,7 @@ import { chromium } from "playwright";
 import sharp from "sharp";
 import { mkdirSync } from "fs";
 
-const SITE = process.argv[2] || "http://localhost:5175/";
+const SITE = process.argv[2] || "http://localhost:5173/";
 const OUT = import.meta.dir + "/";
 
 type Box = [name: string, y: number, h: number, sel?: string];
@@ -19,9 +19,9 @@ const DESKTOP: Box[] = [
   ["12-magazin-header", 3832, 157, "#magazin .section-header"], ["13-magazin", 4005, 212, ".magazine"], ["14-footer", 4233, 817, ".footer"],
 ];
 const MOBILE: Box[] = [
-  ["01-hero", 24, 858, ".site-header"], ["02-riesenia-header", 898, 167, "#riesenia .section-header"], ["03-riesenia", 1081, 534, ".solutions"], ["04-proces", 1631, 377, "#proces .section-header"],
-  ["05-cta", 2064, 336, ".cta-banner"], ["06-realizacie-header", 2416, 198, "#realizacie .section-header"], ["07-realizacie", 2630, 1344, ".realizations"], ["08-technologie", 4030, 674, ".tech"],
-  ["09-magazin", 4720, 421, "#magazin .section-header"], ["10-footer", 5197, 1177, ".footer"],
+  ["01-hero", 24, 854, ".site-header"], ["02-riesenia-header", 894, 167, "#riesenia .section-header"], ["03-riesenia", 1077, 534, ".solutions"], ["04-proces", 1627, 377, "#proces .section-header"],
+  ["05-cta", 2060, 336, ".cta-banner"], ["06-realizacie-header", 2412, 198, "#realizacie .section-header"], ["07-realizacie", 2626, 1344, ".realizations"], ["08-technologie", 4026, 674, ".tech"],
+  ["09-magazin", 4716, 421, "#magazin .section-header"], ["10-footer", 5193, 1186, ".footer"],
 ];
 
 async function shoot(width: number, file: string, boxes: Box[]) {
@@ -83,6 +83,6 @@ if (which !== "mobile") {
 }
 if (which !== "desktop") {
   const { height: h, ys } = await shoot(390, `${OUT}web-mobile-390.png`, MOBILE);
-  console.log("web výška mobil", h, "(Figma 6398)");
+  console.log("web výška mobil", h, "(Figma 6379)");
   await compare("mobile-390", `${OUT}figma/mobile-390.png`, `${OUT}web-mobile-390.png`, MOBILE, 390, ys);
 }

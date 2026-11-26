@@ -440,7 +440,7 @@
   .hero { display: flex; flex-direction: column; gap: var(--spacing-component-md); }
   /* navigácia → hero má na mobile medzeru 12 (Figma 82:871), stránka inak 16 */
   .page__main { margin-top: calc(var(--spacing-component-md) - var(--spacing-component-lg)); }
-  .hero-tile { height: 25rem; padding: var(--spacing-content-sm); }
+  .hero-tile { height: 24.75rem; padding: var(--spacing-content-sm); } /* 396 (Figma 82:874, 26. 11.) */
   .hero-tile__bottom { gap: var(--spacing-content-xs); }
   .hero-tile__lead { width: auto; }
   .hero-tile__actions { flex-direction: column; align-items: stretch; }
@@ -571,3 +571,12 @@
 .navigation.is-pinned.is-shown { transform: none; }
 .navigation.no-anim { transition: none; }
 @media (prefers-reduced-motion: reduce) { .navigation.is-pinned { transition: none; } }
+
+/* výrez fotky veľkej realizácie podľa Figmy (CROP: 77:795 desktop, 82:946 mobil) */
+.real-card--large .real-card__bg img { object-position: 69% 50%; }
+@media (max-width: 1023.98px) { .real-card--large .real-card__bg img { object-position: 73% 50%; } }
+/* desktop: Výstavy, Tlačoviny, Orientačné (fotky sa lepšie dopĺňajú); mobil ponecháva pôvodné poradie (82:929) */
+@media (max-width: 1023.98px) {
+  .solutions .solution-tile:nth-child(4) { order: 5; }
+  .solutions .solution-tile:nth-child(5) { order: 4; }
+}
