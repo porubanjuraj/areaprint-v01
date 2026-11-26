@@ -1,6 +1,5 @@
 /**
- * Homepage v01: skladá stránku z komponentov. Texty sú z Figmy (sekcia v01 58:4974),
- * „Naša riešenie.“ je opravené na „Naše riešenie.“ (HANDOFF 7.1).
+ * Homepage v01: skladá stránku z komponentov. Texty sú z Figmy (sekcia v01 58:4974, hero upravený 26. 11. 2026).
  */
 import { Button, Chip, ClientLogo, SliderDots, TechLink, icon } from "./components/core";
 import {
@@ -53,9 +52,9 @@ function Hero() {
   <div class="hero-tile on-dark raster-tile" data-raster="hero">
     <canvas class="raster-tile__canvas" aria-hidden="true"></canvas>
     <div class="hero-tile__inner">
-      <h1 class="hero-tile__title t-display-xl" id="hero-title" data-reveal>Vaše zadanie.<br> Naše riešenie.</h1>
+      <h1 class="hero-tile__title t-display-xl" id="hero-title" data-reveal>Jeden partner<br> od tlače<br class="br-m"> po montáž</h1>
       <div class="hero-tile__bottom" data-reveal style="--reveal-delay:80ms">
-        <p class="hero-tile__lead t-body-m">Navrhneme, technicky pripravíme, vyrobíme<br class="br-d"> a nainštalujeme. Zastrešíme celý proces,<br class="br-d"> aby ste sa mohli venovať svojmu biznisu.</p>
+        <p class="hero-tile__lead t-body-m"><span class="copy-d">Nemusíte koordinovať grafika, tlačiareň<br> a montážnikov. Celé zadanie prevezmeme<br> a odovzdáme hotové priamo na mieste.</span><span class="copy-m">Navrhneme, technicky pripravíme, vyrobíme a nainštalujeme. Zastrešíme celý proces, aby ste<br> sa mohli venovať svojmu biznisu.</span></p>
         <div class="hero-tile__actions">
           ${Button({ label: "Tlač na mieru", href: "#kontakt", style: "accent", size: "m" })}
           ${Button({ label: "Realizácie", href: "#realizacie", style: "outline-dark", size: "m" })}
